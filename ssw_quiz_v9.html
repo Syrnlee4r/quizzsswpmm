@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SSW 食品製造業 練習問題</title>
+<style>
+:root{--bg:#f3f5fb;--card:#fff;--tx:#18203a;--mut:#6b7491;--bd:#e0e5f2;--ok:#16a05a;--okb:#e2f6ea;--ng:#d6453a;--ngb:#fdeae8;--ac:#4b5fe8;--ac2:#8b5cf6;--sh:0 6px 20px rgba(40,50,100,.08);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1220;--card:#181c30;--tx:#e9ecf8;--mut:#9aa3c4;--bd:#2a3050;--ok:#4cd68a;--okb:#14301f;--ng:#ff8b80;--ngb:#3a1b1a;--ac:#7c8cff;--ac2:#a78bfa;--sh:0 6px 20px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#0f1220;--card:#181c30;--tx:#e9ecf8;--mut:#9aa3c4;--bd:#2a3050;--ok:#4cd68a;--okb:#14301f;--ng:#ff8b80;--ngb:#3a1b1a;--ac:#7c8cff;--ac2:#a78bfa;--sh:0 6px 20px rgba(0,0,0,.35)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",system-ui,sans-serif;line-height:1.65}
+[hidden]{display:none!important}
+.wrap{max-width:720px;margin:0 auto;padding:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:22px;padding:28px 22px;box-shadow:var(--sh);margin-bottom:22px}
+.hero small{opacity:.85;letter-spacing:.08em}
+.hero h1{margin:6px 0 6px;font-size:1.55rem;line-height:1.3}
+.hero p{margin:0;opacity:.9;font-size:.92rem}
+h3{font-size:.85rem;color:var(--mut);margin:22px 4px 8px;letter-spacing:.06em}
+.grid{display:grid;gap:10px}
+.card{background:var(--card);border:2px solid var(--bd);border-radius:16px;padding:14px 16px;text-align:left;box-shadow:var(--sh);width:100%;transition:.15s}
+.card b{display:block;font-size:1.02rem}
+.card span{color:var(--mut);font-size:.85rem}
+.card.on{border-color:var(--ac);background:linear-gradient(0deg,var(--card),var(--card)) padding-box}
+.card.on b::after{content:" ✓";color:var(--ac)}
+.card.soon{border-style:dashed;box-shadow:none;color:var(--mut);cursor:default;text-align:center}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modes .card{text-align:center}
+.modes .ic{font-size:1.6rem;display:block}
+.go{width:100%;margin-top:22px;border:0;border-radius:16px;padding:16px;font-size:1.1rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:var(--sh)}
+.go:active{transform:scale(.98)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 16px 8px}
+.top .in{max-width:720px;margin:0 auto}
+.row{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.chip{background:var(--card);border:1px solid var(--bd);border-radius:999px;padding:4px 12px;font-size:.88rem;font-weight:600;font-variant-numeric:tabular-nums}
+.chip.warn{color:var(--ng);border-color:var(--ng)}
+.fin{background:none;border:1px solid var(--bd);border-radius:999px;padding:4px 12px;font-size:.85rem;color:var(--mut)}
+.prog{height:6px;background:var(--bd);border-radius:3px;margin-top:8px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .3s}
+.q{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;box-shadow:var(--sh);margin-top:6px}
+.q .no{color:var(--ac);font-weight:700;font-size:.85rem}
+.q h2{font-size:1.05rem;margin:6px 0 14px;font-weight:600;white-space:pre-line}
+.o{display:flex;gap:10px;width:100%;text-align:left;background:var(--bg);border:2px solid var(--bd);border-radius:14px;padding:12px;margin:8px 0;transition:.15s}
+.o i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--card);border:1.5px solid var(--bd);display:grid;place-items:center;font-style:normal;font-size:.8rem;font-weight:700}
+.o:hover:not(:disabled){border-color:var(--ac)}
+.o:disabled{cursor:default}
+.o.ok{background:var(--okb);border-color:var(--ok)}.o.ok i{background:var(--ok);color:#fff;border-color:var(--ok)}
+.o.ng{background:var(--ngb);border-color:var(--ng)}.o.ng i{background:var(--ng);color:#fff;border-color:var(--ng)}
+.fb{margin-top:12px;font-weight:700}.fb.ok{color:var(--ok)}.fb.ng{color:var(--ng)}
+.nav{display:flex;gap:10px;margin-top:14px}
+.nav button{flex:1;padding:13px;border-radius:14px;border:1.5px solid var(--bd);background:var(--card);font-weight:600}
+.nav button.p{background:var(--ac);border-color:var(--ac);color:#fff}
+.nav button:disabled{opacity:.4}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px;margin-top:16px}
+.map button{aspect-ratio:1;border-radius:10px;border:1.5px solid var(--bd);background:var(--card);font-size:.8rem;font-weight:600}
+.map .cur{outline:2.5px solid var(--ac)}
+.map .ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.map .ng{background:var(--ng);color:#fff;border-color:var(--ng)}
+.ring{width:170px;height:170px;border-radius:50%;margin:10px auto 14px;display:grid;place-items:center;background:conic-gradient(var(--ac) calc(var(--p)*1%),var(--bd) 0)}
+.ring div{width:134px;height:134px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:2rem;font-weight:800;line-height:1.1;text-align:center}
+.ring small{display:block;font-size:.8rem;color:var(--mut);font-weight:500}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.stats div{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 4px;font-size:.78rem;color:var(--mut)}
+.stats b{display:block;font-size:1.2rem;color:var(--tx)}
+.rv{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--ng);border-radius:12px;padding:12px 14px;margin:10px 0;font-size:.9rem;white-space:pre-line}
+.rv em{display:block;font-style:normal;margin-top:6px;color:var(--ok);font-weight:600}
+.rv u{display:block;text-decoration:none;color:var(--ng);margin-top:4px}
+ruby{ruby-position:over}rt{font-size:.52em;font-weight:400;color:var(--mut);letter-spacing:0}.o span,.q h2,.rv{line-height:2}.nofuri rt{display:none}.nofuri .o span,.nofuri .q h2,.nofuri .rv{line-height:1.65}.tg{display:inline-block;margin-top:18px;background:var(--card);border:1.5px solid var(--bd);border-radius:999px;padding:6px 16px;font-size:.88rem}.lg{display:grid;gap:8px}.lg label{font-size:.85rem;color:var(--mut);margin:6px 4px 0}.lg input{font:inherit;color:var(--tx);background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:13px 14px;width:100%;outline:none}.lg input:focus{border-color:var(--ac)}.le{color:var(--ng);font-weight:600;font-size:.9rem}
+.paper{container-type:inline-size;width:100%;max-width:560px;margin:8px auto;background:#fff;color:#111;border-radius:4px;box-shadow:var(--sh);padding:2.5cqw}
+.pi{font-size:2.3cqw;aspect-ratio:210/297;display:flex;flex-direction:column;border:.4cqw solid #2a3a8c;font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",system-ui,sans-serif;line-height:1.35}
+.pi b{font-size:1.15em}.pi small{display:block;font-size:.62em;color:#555;font-weight:400}
+.pi>:not(.ch){margin-left:6cqw;margin-right:6cqw}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:3cqw;background:#2a3a8c;color:#fff;padding:5cqw 6cqw;margin-bottom:5cqw}
+.ch h2{margin:0 0 .4em;font-size:2.1em;line-height:1.3}.ch small{color:#cfd6ff}
+.logo{flex:none;background:#fff;color:#2a3a8c;font-weight:900;letter-spacing:.12em;font-size:1.4em;line-height:1.15;padding:.6em .9em;text-align:center}
+.r{display:grid;grid-template-columns:31% 1fr;margin-bottom:1em;align-items:start}
+.rows{margin-bottom:3cqw}
+.intro{border-top:.3cqw solid #ccc;padding-top:3cqw;margin-bottom:3cqw}
+.ed{display:inline-block;min-width:8em;border-bottom:.3cqw dashed #9aa;outline:none}.ed:empty::before{content:attr(data-ph);color:#aaa}
+#c-res.pass,#c-res.fail{display:inline-block;font-weight:800;font-size:1.5em;border:.5cqw solid;padding:.2em .7em;line-height:1.3}
+#c-res.pass{color:#118a4b}#c-res.fail{color:#c0392b}#c-res small{font-size:.5em;font-weight:600;color:inherit}
+.foot{margin-top:auto;margin-bottom:5cqw;border-top:.3cqw solid #ccc;padding-top:2.5cqw}
+.hint{text-align:center;color:var(--mut);font-size:.85rem}.ctl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media print{@page{size:A4;margin:0}body{background:#fff}section:not(#cert){display:none!important}#cert{max-width:none;padding:0}.hint,.ctl{display:none}.paper{max-width:none;width:210mm;height:297mm;margin:0;box-shadow:none;border-radius:0}.ed{border:0}.ed:empty::before{content:""}}
+.nofuri .cb-q{line-height:1.6}
+.cb{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+.cb-hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:#1f3a6e;color:#fff;display:flex;align-items:center;gap:12px;padding:10px 16px}
+.cb-t{flex:1;min-width:0}.cb-t b{display:block;font-size:1rem}.cb-t small{display:block;opacity:.8;font-size:.78rem}
+.cb-fs button{background:rgba(255,255,255,.16);border:0;color:#fff;border-radius:6px;padding:5px 9px;margin-left:4px}
+.cb-tm{background:#0e2247;border-radius:8px;padding:4px 14px;text-align:center}.cb-tm small{display:block;font-size:.62rem;opacity:.8}
+.cb-tm b{font-size:1.4rem;font-variant-numeric:tabular-nums}.cb-tm b.warn{color:#ff8b80}
+.cb-body{display:grid;grid-template-columns:1fr;gap:12px;padding:12px;flex:1}
+@media(min-width:780px){.cb-body{grid-template-columns:1fr 250px}}
+.cb-main{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:18px;font-size:calc(1rem*var(--fz,1))}
+.cb-qh{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #1f3a6e;padding-bottom:8px;margin-bottom:14px;font-weight:700}
+.flag{font-size:.85rem;font-weight:600;color:#c2610c;display:flex;gap:6px;align-items:center;cursor:pointer}.flag input{width:18px;height:18px;accent-color:#e67e22}
+.cb-q{font-size:1.1em;font-weight:600;line-height:2;margin:0 0 14px;white-space:pre-line}
+.o.sel{border-color:var(--ac);background:var(--card)}.o.sel i{background:var(--ac);color:#fff;border-color:var(--ac)}
+.cb-side{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;align-self:start}
+.cb-sh{font-weight:700;font-size:.9rem;border-bottom:2px solid #1f3a6e;padding-bottom:6px;margin-bottom:10px}
+.map button{position:relative}.map .a{background:#1f6fd1;color:#fff;border-color:#1f6fd1}.map .f::after{content:"⚑";position:absolute;top:-7px;right:-3px;font-size:.75rem;color:#e67e22}
+.lgd{font-size:.72rem;color:var(--mut);margin-top:12px;display:grid;gap:4px}.lgd .i{display:none}.ins .lgd .i{display:block}.ins .lgd .e{display:none}
+.sw{display:inline-block;width:14px;height:14px;border:1.5px solid var(--bd);border-radius:3px;vertical-align:-2px;margin-right:6px;background:var(--card)}
+.sw.a{background:#1f6fd1;border-color:#1f6fd1}.sw.ok{background:var(--ok);border-color:var(--ok)}.sw.ng{background:var(--ng);border-color:var(--ng)}.sw .fl{position:absolute;top:-8px;right:-4px;font-size:.7rem;color:#e67e22;font-weight:400}
+.cb-sc{margin-top:12px;font-size:.82rem;white-space:pre-line;line-height:1.9;border-top:1px solid var(--bd);padding-top:8px}
+.cb-ft{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+.cb-ft button{flex:1;padding:12px;border-radius:8px;border:1.5px solid var(--bd);background:var(--bg);font-weight:600}.cb-ft .fn{background:#c0392b;border-color:#c0392b;color:#fff;flex:1.4}.cb-ft button:disabled{opacity:.4}
+.dlg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:20;padding:16px}
+.dbox{background:var(--card);border-radius:14px;padding:22px;max-width:380px;width:100%;text-align:center}.dbox p{white-space:pre-line;line-height:2;margin:0 0 14px}
+.dbox div{display:flex;gap:10px}.dbox button{flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--bd);background:var(--bg);font-weight:700}.dbox #d-ok{background:#c0392b;color:#fff;border-color:#c0392b}
+.thm{background:var(--card);color:var(--tx);border:1.5px solid var(--bd);border-radius:999px;width:38px;height:38px;font-size:1.1rem;line-height:1;cursor:pointer;flex:none;padding:0}
+.thm.fixed{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:30;box-shadow:var(--sh)}
+.cb-hd .thm{background:rgba(255,255,255,.16);border:0;width:34px;height:34px}
+@media print{.thm{display:none!important}}
+</style>
+</head>
+<body>
+<button class="thm fixed" id="thm1" aria-label="Light / Dark"></button>
+
+<section id="login" class="wrap">
+  <div class="hero"><small>特定技能評価試験</small><h1>食品製造業<br>練習問題</h1><p>Silakan login · ログイン</p></div>
+  <div class="lg">
+    <label>Username</label><input id="lu" autocomplete="username" autocapitalize="none" spellcheck="false">
+    <label>Password</label><input id="lp" type="password" autocomplete="current-password">
+    <div class="le" id="le" hidden>Username atau password salah.</div>
+    <button class="go" id="lb">ログイン ▶</button>
+  </div>
+</section>
+
+<section id="home" class="wrap" hidden>
+  <div class="hero"><small>特定技能評価試験</small><h1>食品製造業<br>練習問題</h1><p>ตอบแล้วเฉลยทันที · Jawab langsung lihat jawaban benar</p></div>
+  <h3>問題セット (SET SOAL)</h3>
+  <div class="grid" id="sets"></div>
+  <h3>モード (MODE)</h3>
+  <div class="modes">
+    <button class="card on" id="m-timed"><span class="ic">⏱</span><b>タイマーあり</b><span>70分 · batas waktu</span></button>
+    <button class="card" id="m-free"><span class="ic">♾</span><b>時間なし</b><span>tanpa batas waktu</span></button>
+  </div>
+  <h3 style="margin-top:22px">答え (JAWABAN)</h3>
+  <div class="modes">
+    <button class="card on" id="a-now"><span class="ic">⚡</span><b>即時に答え</b><span>langsung setelah menjawab</span></button>
+    <button class="card" id="a-end"><span class="ic">📋</span><b>最後に答え</b><span>seperti ujian asli (di akhir)</span></button>
+  </div>
+  <span class="chip" id="hi"></span> <button class="tg" id="out">ログアウト</button>
+  <button class="tg" id="tg">ふりがな: ON</button>
+  <button class="go" id="go">スタート ▶</button>
+</section>
+
+<section id="quiz" hidden>
+ <div class="cb">
+  <div class="cb-hd">
+    <div class="cb-t"><b id="cb-title"></b><small id="cb-user"></small></div>
+    <button class="thm" id="thm2" aria-label="Light / Dark"></button><div class="cb-fs"><button id="fsm">A−</button><button id="fsp">A＋</button></div>
+    <div class="cb-tm"><small>残り時間 / Sisa waktu</small><b id="tm">70:00</b></div>
+  </div>
+  <div class="cb-body">
+    <div class="cb-main">
+      <div class="cb-qh"><span id="no"></span><label class="flag"><input type="checkbox" id="flg"> 見直し / Tandai</label></div>
+      <h2 id="qt" class="cb-q"></h2>
+      <div id="opts"></div>
+      <div class="fb" id="fb"></div>
+    </div>
+    <aside class="cb-side">
+      <div class="cb-sh">問題一覧 / Daftar soal</div>
+      <div class="map" id="map"></div>
+      <div class="lgd"><span><i class="sw"></i>未回答 Belum</span><span class="e"><i class="sw a"></i>回答済 Terjawab</span><span class="i"><i class="sw ok"></i>正解 Benar</span><span class="i"><i class="sw ng"></i>不正解 Salah</span><span><i class="sw" style="position:relative"><b class="fl">⚑</b></i>見直し Ditandai</span></div>
+      <div class="cb-sc" id="sc"></div>
+    </aside>
+  </div>
+  <div class="cb-ft"><button id="prev">◀ 前へ</button><button id="next">次へ ▶</button><button id="fin" class="fn">試験を終了 / Selesai</button></div>
+ </div>
+ <div class="dlg" id="dlg" hidden><div class="dbox"><p id="dmsg"></p><div><button id="d-no">戻る</button><button id="d-ok">終了する</button></div></div></div>
+</section>
+
+<section id="result" class="wrap" hidden>
+  <div class="hero" style="text-align:center"><small id="rt"></small><div class="ring" id="ring"><div id="rs"></div></div><p id="rm"></p></div>
+  <div class="stats" id="stats"></div>
+  <h3>間違えた問題 / 未回答 (SOAL SALAH / KOSONG)</h3>
+  <div id="rev"></div>
+  <button class="go" id="tocert" style="background:linear-gradient(135deg,#16a05a,#0e7f8f)">📜 証明書 / Sertifikat</button>
+  <button class="go" id="again" style="margin-top:10px">もう一度 ↻</button>
+  <button class="go" id="back" style="background:var(--card);color:var(--tx);border:2px solid var(--bd);box-shadow:none;margin-top:10px">ホームへ</button>
+</section>
+
+<section id="cert" class="wrap" hidden>
+  <div class="paper" id="certbox"><div class="pi">
+    <div class="ch"><div><h2>食品製造業 練習テスト<br>結果通知書</h2><small>Notification of results for<br>Food manufacturing Practice Test</small></div><div class="logo">SSW<br>PRACTICE</div></div>
+    <div class="rows">
+      <div class="r"><div><b>受験番号</b><small>Registration Number</small></div><div>: <span id="c-no"></span></div></div>
+      <div class="r"><div><b>氏名</b><small>Name</small></div><div>: <span class="ed" id="c-name" contenteditable="true"></span></div></div>
+      <div class="r"><div><b>国籍</b><small>Nationality</small></div><div>: Indonesia</div></div>
+      <div class="r"><div><b>生年月日</b><small>Date of Birth</small></div><div>: <span class="ed" id="c-dob" contenteditable="true" data-ph="yyyy/mm/dd"></span> (yyyy/mm/dd)</div></div>
+      <div class="r"><div><b>性別</b><small>Sex</small></div><div>: <span class="ed" id="c-sex" contenteditable="true"></span></div></div>
+      <div class="r"><div><b>受験地</b><small>Test Location</small></div><div>: Indonesia</div></div>
+      <div class="r"><div><b>受験日</b><small>Test Date</small></div><div>: <span id="c-date"></span> (yyyy/mm/dd)</div></div>
+      <div class="r"><div><b>発行者</b><small>Issuer</small></div><div>: SSW Practice Quiz (non-official)</div></div>
+    </div>
+    <div class="intro"><b>試験の結果は以下の通りです。</b><small>Your test results are as follows.</small></div>
+    <div class="r"><div><b>試験名</b><small>Exam Name</small></div><div>: <span id="c-exam"></span></div></div>
+    <div class="r"><div><b>試験結果</b><small>Exam Result</small></div><div><div id="c-res"></div></div></div>
+    <div class="foot"><b>これは練習用の結果通知であり、公式の証明書ではありません。</b><small>This is a practice result notification, not an official certificate.</small></div>
+  </div></div>
+  <p class="hint">Klik nama, tanggal lahir, dan jenis kelamin di sertifikat untuk mengisinya.</p>
+  <div class="ctl"><button class="go" id="prt" style="margin-top:0">印刷 / PDF</button><button class="go" id="cb" style="margin-top:0;background:var(--card);color:var(--tx);border:2px solid var(--bd);box-shadow:none">戻る</button></div>
+</section>
+
+<script>
+const D=[
+["問1 安全でない食品を作って、それが売られてしまうと、どうなりますか。","食品を作った人が病気になって、給料が下がる。","食品を食べた人が病気になって、作った会社の信用が落ちる。","食品を作った会社が有名になって、その会社の別の商品が売れる。",1],
+["問2 職場に行く前に、体の調子が悪いときは、どうすればよいですか。","だれにも連絡しないで、仕事を休む。","職場の責任者に連絡して、仕事を休む。","どんな体の調子が悪くても、職場に行く。",1],
+["問3 機械や器具を洗浄するときは、どのようにしますか。","洗浄剤の濃度を確認する。","洗浄する部分を毎日変える。","洗浄剤で洗った後、洗い流さずに乾かす。",0],
+["問4 作業中は、どのような態度がよいですか。","時間が気になるので、何度も時計を見る。","隣の人とテレビの話をしながら作業する。","製品の状態を見て、異物がないか確認する。",2],
+["問5 作業中の衛生的な行動として、正しいものを一つ選びなさい。","髪の毛や鼻を触った後、3秒待ってから作業する。","トイレの後、石けんまたは洗剤で手を洗ってから、消毒液で消毒する。","手がぬれたとき、作業服でふいて、乾いたことを確認する。",1],
+["問6 5S活動は、一般衛生管理のために行う活動です。整理、整頓、清潔、しつけ、（　）の5つの活動のことです。（　）に入るものはどれですか。","清算","洗浄","清掃",2],
+["問7 5S活動の中の「整頓」は、どのような活動ですか。","場所や時間、ごみの捨て方など、決められたことを常に守る。","作業場や機械をきれいな状態に保つ。","道具や材料の置き場所を決めておき、すぐに出せるようにする。",2],
+["問8 ノロウイルスによる食中毒の主な原因となる食品は何ですか。","豚肉などの食肉","卵などの食品","かきなどの二枚貝",2],
+["問9 食肉、特に鶏肉に多く付着し、ギラン・バレー症候群を起こすこともある食中毒の原因菌はどれですか。","腸管出血性大腸菌","カンピロバクター","ボツリヌス菌",1],
+["問10 職場で食中毒を予防するために大切なことは何ですか。","生の肉や貝を、室温で保管する。","容器、器具、設備は、いつも清潔にしておく。","加熱した食品は、ゆっくり冷やす。",1],
+["問11 多くの微生物は、何度くらいで急に増えますか。","0〜10℃","30〜40℃","60〜70℃",1],
+["問12 多くの微生物を殺すためには、何度で何分間加熱しますか。","75℃で1分間以上","50℃で1分間","30℃で5分間",0],
+["問13 微生物を殺すために食品を加熱するとき、食品のどこの温度を測りますか。","食品の表面の温度","食品の中心の温度","食品の表面と中心の温度の平均",1],
+["問14 主に石やガラスなどの異物を見つける機器の名前は何ですか。","金属検出機","X線検査機","磁石",1],
+["問15 冷凍庫は、何度以下に保ちますか。","0℃以下","−15℃以下","−5℃以下",1],
+["問16 容器包装された加工食品で、アレルギー表示をしなければならない食品（特定原材料）はどれですか。","ごま","大豆","そば",2],
+["問17 HACCP（ハサップ）とは、製品の安全のために何をすることですか。","完成した製品を検査する。","原材料の受け入れだけを管理する。","危害要因を分析して、重要管理点を管理する。",2],
+["問18 働く経験が短い人のほうが、長い人よりも労働災害が多いのはなぜですか。","危険な作業を担当することが多いから。","若くて、作業時間が長い人が多いから。","作業に慣れていないために、危険に気づきにくいから。",2],
+["問19 作業服で注意が必要なことについて、間違っているものを一つ選びなさい。","ポケットやボタンのある作業服を着る。","作業服の袖口は、しぼったものを使う。","ロッカーの中で、汚れた作業服ときれいな作業服が混ざらないようにする。",0],
+["問20 作業場に入る前に、どのようなことに注意しますか。間違っているものを一つ選びなさい。","作業服にごみがついていないか確認してから、作業服を着る。","トイレの後の手洗いでは、石けんだけを使う。","汚染区から非汚染区に入るときは、作業靴を消毒する。",1],
+["問21 作業中の行動について、間違っているものを一つ選びなさい。","危険な作業をしている人を見たら、すぐに注意する。","危険な場所を見つけたら、責任者にすぐ報告する。","作業を離れる時間が短いときは、黙って離れてもよい。",2],
+["問22 製品の微生物検査について、間違っているものを一つ選びなさい。","法律で決められた検査項目があれば、それに従って検査する。","カンピロバクターは、日本では検査する必要がない。","検査した結果は、記録して保管する。",1],
+["問23 危害要因分析について、間違っているものを一つ選びなさい。","原材料ごと、工程ごとに危害要因を確認する。","製造工程の危害要因だけを確認すればよい。","確認した結果を、記録に残す。",1],
+["問24 アレルギー食品が他の食品に混ざること（交差汚染）を防ぐために、間違っているものを一つ選びなさい。","特定原材料を含む食品は、1日の作業の最初に製造する。","アレルギー食品を含む原材料と、含まない原材料は、別に保管する。","同じラインで製造する場合は、定期的に洗浄する。",0],
+["問25 HACCPの7原則について、間違っているものを一つ選びなさい。","危害要因分析を行う。","施設基準を設定する。","モニタリング方法を設定する。",1],
+["問26 危険異物には、どのようなものがありますか。間違っているものを一つ選びなさい。","石","髪の毛","ガラス",1],
+["問27 保護具について、間違っているものを一つ選びなさい。","保護帽は、傷や割れがないか確認する。","化学薬品を使うときは、保護メガネと手袋をつける。","安全靴の中に空気が入るように、小さな穴を開けておく。",2],
+["問28 熱中症を予防するために、間違っているものを一つ選びなさい。","こまめに休憩をして、水分を補給する。","ストレッチングを中心とした予防体操をする。","汗を吸って乾きやすい衣服を着る。",1],
+["問29 機械の掃除の仕方について、間違っているものを一つ選びなさい。","機械を洗うときは、水で流すだけでよい。","機械の取り外しができるところは、外して掃除する。","掃除するときは、機械を止める。",0],
+["問30 異常が起きたとき、どうしますか。間違っているものを一つ選びなさい。","必要があれば、非常停止ボタンで機械を止める。","周りにいる責任者や同僚に、大きな声で知らせる。","だれにも相談しないで作業を離れ、安全な場所へ避難する。",2],
+["問31 作業に入るとき、粘着ローラーをかけるのは何のためですか。","ほこりや髪の毛を落とすため。","作業場を冷やすため。","作業服を乾かすため。",0],
+["問32 手洗いの手順について、下の（　）には何が入りますか。\n水で汚れを落とす → 洗剤で洗う → 水で洗い流す → ペーパータオルで拭き取る → （　）","ドライヤーを使う。","消毒液を使う。","手洗い剤でもう一度洗う。",1],
+["問33 【イラスト：脚立の上でレンチを使ってボルトを締めている人が、バランスをくずして落ちそうになっている】\n脚立の上でレンチを使ってボルトを締めたとき、脚立から落ちそうになりました。このような事故を防ぐために、間違っているものを一つ選びなさい。","レンチでボルトを締めるとき、不安定な姿勢で作業すること。","作業を始める前に、レンチがすり減っていないか確認すること。","脚立の天板の上に立たないこと。",0],
+["問34 【イラスト：クレーンで吊り上げられた荷物（バック）が、近くに立っている人に当たりそうになっている】\nクレーンで荷物を吊り上げようとしたとき、荷物に当たって倒れそうになりました。この原因として、正しいものを一つ選びなさい。","クレーンで荷物を吊り上げるとき、自分が立っている位置が危険な場所だと気づいていなかった。","荷物を吊り上げたとき、クレーンのワイヤーが切れた。","クレーンの運転者が、荷物をゆっくり吊り上げた。",0],
+["問35 濃度10％の次亜塩素酸ナトリウムを使って、400ppmの次亜塩素酸ナトリウム溶液を1リットル作ります。必要な次亜塩素酸ナトリウムと水の量は、どれですか。","次亜塩素酸ナトリウム 4mL、水 996mL","次亜塩素酸ナトリウム 40mL、水 960mL","次亜塩素酸ナトリウム 0.4mL、水 999.6mL",0],
+["問36 450gのうどんを作るのに、小麦粉が300g必要です。小麦粉が10kgあるとき、うどんは何kg作れますか。","6.7kg","15kg","30kg",1],
+["問37 【イラスト：稼働中のベルトコンベヤーを雑巾で清掃していた人の手が、ベルトに巻き込まれそうになっている】\nベルトコンベヤーを清掃したとき、雑巾がベルトに引っかかって、手が巻き込まれそうになりました。この事故を防ぐために、正しいものを一つ選びなさい。","雑巾を使わず、手で清掃する。","機械を止めてから、清掃する。","近くに人がいるのが見えるときに、清掃する。",1],
+["問38 【イラスト：冷凍庫の床に霜があり、作業者の足がすべって転びそうになっている】\n冷凍庫の中で作業したとき、床にできた霜で足がすべって、転びそうになりました。このような事故を防ぐために、正しいものを一つ選びなさい。","冷凍庫の温度を上げて、床の霜をなくす。","霜や水をふまないように、大股で歩く。","すべりにくい靴をはいて、床の霜や水に注意する。",2],
+["問39 【イラスト：作業者が、機械の反対側に行くためにローラーコンベヤーの上に乗って、転んでいる】\n機械の反対側に行こうとして、ローラーコンベヤーの上に乗ったところ、転んで機械を止めてしまいました。このような事故を防ぐために、正しいものを一つ選びなさい。","機械の脇に柵を設けて、乗れないようにする。","ローラーが回っていないときは、乗ってもよいことにする。","ローラーコンベヤーの上にカバーをつけて、歩きやすくする。",0],
+["問40 【イラスト：安全カバーのないスライサーで肉を切っている人の右手が、回転刃に近づいている】\n安全カバーのないスライサーで肉を切っているとき、回転刃で右手を切りそうになりました。安全カバーをつける他に、手を切らないためにどうすればよいですか。正しいものを一つ選びなさい。","二人で持つ。","右手だけで持つ。","道具を使って持つ。",2]
+];
+
+
+const D2=[
+["問1 安全な食品を提供するための三条件について、間違っているものを一つ選びなさい。","安い原料","きれいな製造環境","食品の衛生的な取り扱い",0],
+["問2 かきなどの二枚貝に存在し、十分に加熱しないと食中毒が発生しやすい原因は、どれですか。正しいものを一つ選びなさい。","黄色ブドウ球菌","ノロウイルス","大腸菌",1],
+["問3 微生物が増えにくい環境は、どれですか。正しいものを一つ選びなさい。","30〜40℃で、水分があり、汚れがある環境","4℃以下で、乾燥していて、汚れがない環境","室温で、汚れがある環境",1],
+["問4 今日は出勤する予定ですが、お腹が痛くなって、吐いてしまいました。このとき、どうしますか。正しいものを一つ選びなさい。","我慢して出勤する。","責任者に報告して、指示に従う。","自分で判断して休む。",1],
+["問5 作業場に入る前に行う流れとして、正しいものを一つ選びなさい。","作業着を正しく着る → 手洗い → 粘着ローラーで髪の毛やほこりを取る → 入室","手洗い → 作業着を着る → 粘着ローラーで髪の毛やほこりを取る → 入室","作業着を正しく着る → 粘着ローラーで髪の毛やほこりを取る → 入室 → 手洗い",0],
+["問6 作業中について、最も正しいものを一つ選びなさい。","作業中でも、同僚と話をしながら作業してよい。","異常があっても、作業が終わるまで機械を止めない。","異常があったときは、機械を止めて責任者に報告する。",2],
+["問7 作業後の清掃について、間違っているものを一つ選びなさい。","作業が終わったら、作業場の床や機械を清掃する。","使った道具は、洗浄して、決められた場所に片づける。","器具や機械は、すぐ使えるように、使い終わってもそのまま置いておく。",2],
+["問8 5S活動の実践について、間違っているものを一つ選びなさい。","整理、整頓、清掃をして、きれいな状態に保つ。","整頓は、必要なものは保管し、不要なものは捨てることである。","しつけは、決められたことを常に守り、習慣にすることである。",1],
+["問9 石やガラスなど、金属以外の異物を見つけることができる機器として、正しいものを一つ選びなさい。","金属検出機","X線異物検出機","重量チェッカー",1],
+["問10 製品の保管管理について、最も正しいものを一つ選びなさい。","一般的に、冷凍庫は−15℃以下、冷蔵庫は10℃以下で保管する。","保管用のサンプルは、適当に取り出して保管する。","製品の微生物検査項目は、それぞれの工場で決める。",0],
+["問11 アレルギーを起こす人が多く、表示しなければならない食品の組み合わせとして、正しいものを一つ選びなさい。（2026年4月より前のモジュール）","くるみ、そば、卵、落花生、小麦、玉ねぎ、えび、牛肉","えび、かに、かき、にんじん、牛肉、りんご、オレンジ、くるみ","くるみ、えび、かに、小麦、そば、卵、乳、落花生",2],
+["問12 HACCPで対処する健康危害は、どれですか。正しいものを一つ選びなさい。","食中毒菌による食中毒","機械の故障","作業着の汚れ",0],
+["問13 重要管理点（CCP）について、間違っているものを一つ選びなさい。","抜き取り検査の結果を信じる。","管理基準を設定する。","モニタリングの結果を記録して、保管する。",0],
+["問14 労働安全衛生を行う上で、最も正しいものを一つ選びなさい。","作業手順を繰り返し練習し、慣れによるケガに注意して、軽はずみな動作や強引な動作をしない。","タオルや手ぬぐいを首に巻いて仕事をする。","「危ないかもしれない」と考える必要はないので、意識しなくてもよい。",0],
+["問15 腸炎ビブリオやサルモネラなどによる食中毒は、何に分類されますか。正しいものを一つ選びなさい。","毒素型食中毒","感染型食中毒","ウイルスによる食中毒",1],
+["問16 微生物を増やさないための方法について、正しいものを一つ選びなさい。","冷凍庫から出した原材料は、しばらく室温に置いておく。","加熱した原材料は、室温で保管して温度を下げる。","原材料を置いておく時間を決めて、時間を管理することが必要である。",2],
+["問17 作業着について、間違っているものを一つ選びなさい。","作業着は、いつも清潔なものを着なければならない。","清潔な服なら、何を着てもよい。","作業着は、決められた着方をしなければならない。",1],
+["問18 マスクをつける理由として、間違っているものを一つ選びなさい。","口の中の微生物が、食品に入らないようにするため。","鼻の中の微生物が、食品に入らないようにするため。","顔に汚れがつかないようにするため。",2],
+["問19 手袋をする理由として、正しいものを一つ選びなさい。","手の表面にいる微生物が、食品につかないようにするため。","手が汚れないようにするため。","手が冷たくならないようにするため。",0],
+["問20 作業場に持って入ってよいものを一つ選びなさい。","お金、たばこ","あめ、薬","ロッカーの鍵",2],
+["問21 器具を洗うときに使うものとして、正しいものを一つ選びなさい。","殺菌剤を使って洗う。","アルコールを使って洗う。","洗浄剤を使って洗う。",2],
+["問22 殺菌剤を使って調理器具を消毒する方法として、正しいものを一つ選びなさい。","調理器具を洗う前に消毒する。","消毒する前に、調理器具に水をかける。","調理器具を洗って乾かしてから、消毒する。",2],
+["問23 殺菌した食品の扱い方について、間違っているものを一つ選びなさい。","手袋をつけていない手で、食品を持つ。","手袋をつけた手で、食品を持つ。","消毒した道具を使って、食品を持つ。",0],
+["問24 原材料の扱い方について、間違っているものを一つ選びなさい。","冷凍品は、受け取ったらすぐに冷凍庫に入れる。","砂糖や塩は、湿度が高いところに保管する。","小麦粉や天ぷら粉は、水にぬれないように保管する。",1],
+["問25 作業場で転ばないために、間違っているものを一つ選びなさい。","床に水や油がこぼれたら、すぐにふき取る。","作業靴は、底がすり減ってすべりやすいものをはく。","階段を使うときは、手すりを使う。",1],
+["問26 作業着や作業靴のまま工場の外に出てはいけない理由として、間違っているものを一つ選びなさい。","外のほこりや汚れが、作業着や作業靴につかないようにするため。","外の微生物を、工場内に持ち込まないようにするため。","工場内の汚れや微生物を、外に持ち出すため。",2],
+["問27 殺菌剤の扱い方について、間違っているものを一つ選びなさい。","殺菌剤は、どこに置いてもよい。","殺菌剤を容器に移すときは、必ず移した容器に殺菌剤用と書く。","目に入らないようにする。",0],
+["問28 手洗いについて、間違っているものを一つ選びなさい。","手についた汚れや微生物を取るために行う。","爪の中は、洗わなくてもよい。","指の間や手首まで、しっかり洗う。",1],
+["問29 殺菌剤を使うときの注意について、間違っているものを一つ選びなさい。","殺菌剤の濃度","殺菌する時間","殺菌剤の温度",2],
+["問30 セレウス菌による食中毒の原因となる食品は、どれですか。正しいものを一つ選びなさい。","かきなどの二枚貝","米や小麦などを加工した食品","缶詰",1],
+["問31 食肉や魚介類は、冷蔵庫で何度以下で保管すればよいですか。正しいものを一つ選びなさい。","4℃以下","10℃以下","15℃以下",0],
+["問32 熱中症の症状について、間違っているものを一つ選びなさい。","めまい、立ちくらみ、手足のしびれ、気分が悪い","発熱、激しい腹痛、下痢","返事がおかしい、意識がうすれる、体が熱い",1],
+["問34 濃度10％の次亜塩素酸ナトリウム（NaClO）5mLを使って、200ppmの溶液を作ります。溶液は全部で何Lになりますか。正しいものを一つ選びなさい。","0.5L","2.5L","25L",1],
+["問35 張り紙が雨でぬれて、読めなくなることを防ぐために、どうすればよいですか。正しいものを一つ選びなさい。","高いところに貼る。","透明な袋に入れて貼る。","壁や窓に直接書く。",1],
+["問36 【イラスト：トラックの荷台に段ボールを高く積み込んでいた人が、荷物が崩れて落ちそうになっている】\n荷物をトラックに積み込んでいるとき、荷物が崩れて落ちそうになりました。この事故を防ぐために、正しいものを一つ選びなさい。","荷物を積み上げすぎないようにする。","荷物を高く積み上げ、崩れやすい荷物は崩れ対策をとる。","荷物を適当に積み上げて、手で押さえる。",0],
+["問37 【イラスト：開き止めをしていない脚立に乗った人が、脚立が開いて落ちそうになっている】\nこの事故を防ぐために、正しいものを一つ選びなさい。","脚立は、必ず開き止めをして使用する。","降りるときは両手で脚立をつかむので、荷物は床に投げる。","脚立は危険なので、できるだけ使わないようにする。",0],
+["問38 【イラスト：床に置かれたコード（ホース）につまずいて、人が転びそうになっている】\nこの事故の原因として、正しいものを一つ選びなさい。","床がすべりやすくなっていたため。","使用するコードが長かったため。","使用した後、そのまま置きっぱなしにしたため。",2],
+["問39 【イラスト：（問38と同じ場面）床に置かれたコード（ホース）につまずいて、人が転びそうになっている】\nこの事故を防ぐために、正しいものを一つ選びなさい。","すべりにくい靴をはく。","作業中は、使うコードを短くする。","使用後は、すぐに片づけて、決められた場所に巻いて保管する。",2],
+["問40 【イラスト：スライサーでパンを切っている人が、手で直接パンを押して、手を切りそうになっている】\nスライサーを使用するとき、パンを押す方法として、正しいものを一つ選びなさい。","押し板を使って、パンを押す。","両手をそえて、パンを押す。","左手をそえて、パンを押す。",0]
+];
+
+const D3=[
+["問1 消費者に安全な食品を提供するためには、三つの条件が必要です。安全な原料と食品の衛生的な取り扱いのほかに、もう一つの条件は何ですか。正しいものを一つ選びなさい。","きれいな製造環境","効果的なコスト削減の方法","生産規模と生産設備の面積",0],
+["問2 かきなどの二枚貝を十分に加熱しないで食べると、食中毒になりやすいです。原因は何ですか。正しいものを一つ選びなさい。","黄色ブドウ球菌","セレウス菌","ノロウイルス",2],
+["問3 カンピロバクターによる食中毒の原因となる食品は、どれですか。正しいものを一つ選びなさい。","野菜","鶏肉","牛カルビ",1],
+["問4 セレウス菌による食中毒の原因となる食品は、どれですか。正しいものを一つ選びなさい。","かきなどの二枚貝","米や小麦などを加工した食品","缶詰",1],
+["問5 感染型食中毒の原因菌は、どれですか。（2022年モジュール）正しいものを一つ選びなさい。","黄色ブドウ球菌","腸管出血性大腸菌","ボツリヌス菌",1],
+["問6 食中毒を防ぐ三つの原則は、「つけない」、「やっつける（殺す）」、もう一つは何ですか。正しいものを一つ選びなさい。","汚染させない","増殖させない","持ち込ませない",1],
+["問7 手や指にけががある人が調理したときに、食中毒が発生しやすい原因菌は、どれですか。正しいものを一つ選びなさい。","黄色ブドウ球菌","ボツリヌス菌","サルモネラ",0],
+["問8 カビの特徴は、どれですか。正しいものを一つ選びなさい。","完全になくすことはできない。","米や小麦などの食品には、生えにくい。","低温で製品を保管すれば、完全に防ぐことができる。",0],
+["問9 微生物が増える三つの要素は、温度、栄養分のほかに、もう一つは何ですか。正しいものを一つ選びなさい。","光","水分","圧力",1],
+["問10 細菌は、どのような環境で芽胞をつくりますか。正しいものを一つ選びなさい。","温度が高く、湿度が高い環境","熱や乾燥などで、細菌が育ちにくい環境","水分が豊富な環境",1],
+["問11 微生物が急速に増える温度は、どれですか。正しいものを一つ選びなさい。","10〜20℃","50〜60℃","30〜40℃",2],
+["問12 作業着について、注意しなければならないことで、間違っているものを一つ選びなさい。","ポケットやボタンがついている作業着を着る。","汚れた作業着ときれいな作業着が、ロッカーの中で混ざらないようにする。","上着のすそを、ズボンの中に入れる。",0],
+["問13 作業をする前に、何を確認しなければなりませんか。正しいものを一つ選びなさい。","作業場所と作業内容","一緒に働く人の名前","消毒液の置き場所",0],
+["問14 作業中の注意について、間違っているものを一つ選びなさい。","危険な場所を見つけたら、すぐに責任者に報告する。","手が空いたときは、同僚と話をする。","周りの人が危険な作業をしているのに気づいたら、注意する。",1],
+["問15 作業後の片づけについて、間違っているものを一つ選びなさい。","作業後の清掃は、決められたとおりに行い、いつも清潔にする。","使った危険な道具などは、すぐに使えるように、そのまま置いておく。","汚れた作業着は、必ず洗濯する。",1],
+["問16 5S活動は、整理、整頓、清掃、しつけ、（　）の5つです。（　）に入るものはどれですか。正しいものを一つ選びなさい。","清潔","清算","洗浄",0],
+["問17 HACCPにおいて、作業者に任されている重要なことについて、間違っているものを一つ選びなさい。","モニタリングの結果を知る。","管理基準の設定値を知る。","重要管理点を監視する。",1],
+["問19 食品衛生法の規定では、冷蔵庫の庫内温度は何度以下ですか。正しいものを一つ選びなさい。","0℃以下","10℃以下","20℃以下",1],
+["問20 金属を見つけることができる機器は、どれですか。正しいものを一つ選びなさい。","金属検出機","X線異物検出機","温度計",0],
+["問21 石やガラスなどを見つけることができる機器は、どれですか。正しいものを一つ選びなさい。","金属検出機","温度計","X線異物検出機",2],
+["問22 主な冷却方法について、間違っているものを一つ選びなさい。","流水を当てて冷やす。","風を当てて冷やす。","製氷機に入れて冷やす。",2],
+["問23 微生物の増殖を防ぐために、間違っているものを一つ選びなさい。","定期的に、冷凍庫や冷蔵庫の庫内温度を測定する。","加熱した食品を、ゆっくり冷やす。","加熱した食品を、できるだけ早く冷やす。",1],
+["問24 アレルギーを起こす人が特に多く、表示が義務づけられている食品（8品目）は、どれですか。（2026年4月より前のモジュール）正しいものを一つ選びなさい。","そば、卵、くるみ、乳、小麦、玉ねぎ、えび、かに","えび、かに、かき、にんじん、りんご、オレンジ、くるみ、そば","えび、かに、小麦、そば、卵、落花生、乳、くるみ",2],
+["問25 薬剤（化学薬品）の管理について、間違っているものを一つ選びなさい。","薬剤は、どこで保管してもよい。","薬剤の使用量や残量を、入出庫台帳に書いて記録する。","薬剤の容器には、必ず薬剤名や使用方法などを書く。",0],
+["問26 交差汚染の防止について、間違っているものを一つ選びなさい。","アレルギー食品を含む原材料と、含まない原材料を区分して保管する。","特定原材料を含む製品を製造する場合は、1日の始めに製造する。","アレルゲンを含む製品と含まない製品を同じラインで製造するときは、洗浄しなければならない。",1],
+["問27 ノロウイルスによる食中毒を防ぐための四つのポイントは、どれですか。正しいものを一つ選びなさい。","洗浄する、加熱する、冷却する、保管する","病気を予防する、製造する、検査する、出荷する","持ち込まない、つけない、やっつける、広げない",2],
+["問28 食品衛生管理が不十分な場合、企業にどのような影響がありますか。正しいものを一つ選びなさい。","企業の信頼を失う。","売り上げが上がる。","生産量が増える。",0],
+["問29 HACCP（ハサップ）とは、何をすることですか。正しいものを一つ選びなさい。","衛生管理のために、食中毒の原因となる微生物を調べる。","食品の衛生上の原因を見つけ出す。","危害要因分析を行い、製造工程の重要管理点で、製造の安全を確保する。",2],
+["問30 5S活動と労働安全の関係について、間違っているものを一つ選びなさい。","整理：作業効率が上がり、転倒災害の危険も減ります。","清潔：製品の品質向上、食中毒予防、異物混入防止に効果があります。","しつけ：おしゃべりの時間が減り、製品の品質も向上します。",2],
+["問31 パン300gを作るのに、小麦粉200g、食塩20g、水80gを使います。小麦粉が6kgあるとき、パンは何kg作れますか。正しいものを一つ選びなさい。","4kg","9kg","12kg",1],
+["問32 転倒災害を防ぐポイントについて、正しいものを一つ選びなさい。","大きい物や重い物を持つときは、台車を使いましょう。","床は、いつもぬれていてもよい。","台車を使わないときは、二人でも持ち、一回で運ぶようにしましょう。",0],
+["問33 腰痛災害を防ぐポイントについて、間違っているものを一つ選びなさい。","重い物を持ち上げる前に、呼吸を整える。","重い物を持ち上げるときは、腰に力を入れずに持ち上げる。","できるだけ重い物に体を近づけ、重心を低くする姿勢で取り扱う。",1],
+["問34 働いた経験が少ない人たちの労働災害で、いちばん多いものを選びなさい。","転倒","はさまれ・巻き込まれ","切れ・こすれ",0],
+["問35 【イラスト：荷物を持って坂道を歩いている人が、足をすべらせて転びそうになっている】\n荷物を持って坂道を歩いていて、転びそうになりました。どうすればよいですか。正しいものを一つ選びなさい。","作業靴は定期的に点検し、靴底がすり減ったら交換する。","荷物を重ねて持って移動するときは、作業靴をはかない。","荷物を重ねて持って移動するときは、ゆっくり歩く。",0],
+["問36 【イラスト：重い物を急に持ち上げて肩に載せた人が、腰を痛めている】\nこの事故の原因として、正しいものを一つ選びなさい。","重い物を急に持ち上げて、顔の前に載せたため、腰に強い力がかかったこと。","重い物を急に持ち上げて、肩の上に載せたため、腰に強い力がかかったこと。","重い物を急に持ち上げて、頭の上に載せたため、腰に強い力がかかったこと。",1],
+["問37 【イラスト：大きな鍋を持ち上げようとした人が、腰を痛めている】\nこの事故の原因として、正しいものを一つ選びなさい。","元気に重い物を持ち上げようとしたこと。","安定した姿勢のまま、重い物を持ち上げようとしたこと。","不安定な姿勢のまま、重い物を持ち上げようとしたこと。",2],
+["問38 【イラスト：（問37と同じ場面）大きな鍋を持ち上げようとした人が、腰を痛めている】\nこのような事故を防ぐために、正しいものを一つ選びなさい。","重い物は持たない。","重い物を運ぶときは、できるだけ台車を使用する。","重い物を運ぶときは、できるだけ車を使用する。",1],
+["問39 【イラスト：ロッカーが床に置かれていて、その下にほこりがたまっていて掃除しにくい】\nロッカーの下を掃除するとき、どうすればよいですか。正しいものを一つ選びなさい。","掃除しにくい場所がある場合は、掃除しやすくする方法を考える。","掃除しにくい場所がある場合は、掃除しなくてもよい。","掃除しにくい場所がある場合は、掃除しにくくする方法を考える。",0],
+["問40 濃度10％の次亜塩素酸ナトリウムがあります。100ppmの次亜塩素酸ナトリウム溶液を2L作るとき、10％の次亜塩素酸ナトリウムと水の量は、それぞれ何mLですか。正しいものを一つ選びなさい。","次亜塩素酸ナトリウム 20mL、水 1980mL","次亜塩素酸ナトリウム 2mL、水 1998mL","次亜塩素酸ナトリウム 0.2mL、水 1999.8mL",1]
+];
+
+const D4=[
+["問1 消費者に安全な食品を提供するための三つの条件とは何でしょう。正しいものを一つ選びなさい。","高い原材料費、最新の設備、工場の構造","低コストの原材料、自動製造工程、大きな食品倉庫","安全な原材料、きれいな製造環境、食品の衛生的な取扱い",2],
+["問2 帽子の正しいかぶり方はどれでしょうか。間違っているものを一つ選びなさい。","かぶる前に髪の毛を整える。","髪の毛は少し出ていてもかまわない。","ネットを内側に使用する。",1],
+["問3 作業服について、髪の毛やほこりを取り除くために、作業場に入る前に何をしますか。","粘着ローラーやエアシャワーを使います。","作業服を洗濯します。","帽子を脱ぎます。",0],
+["問4 重い物を取り扱うときに注意する点について、間違っているものを一つ選びなさい。","重い物を運ぶときは、できるだけ台車を使用する。","重い物を持ち上げるときは、体を重い物に近づけて、膝を曲げ、腰を下ろして重い物を抱え、膝を伸ばしながらゆっくり立ち上がる。","重い物から体を離して、重心を高くする姿勢をとる。",2],
+["問5 熱中症の症状が出た人には、何をすればよいでしょうか。間違っているものを一つ選びなさい。","衣服を緩めて体を冷やす。","そのまま寝かせておく。","水に塩分やぶどう糖を溶かした飲み物を与える。",1],
+["問6 働き始めて経験が少ない人たちの労働災害で、最も多いものはどれでしょうか。以下から一つ選びなさい。","やけど","転倒","挟まれ・巻き込まれ",1],
+["問7 5S活動の中の「整理」とは何ですか。","必要な物がすぐに取り出せるように、置き場所を決めておく。","作業場とその周辺を、いつもきれいに掃除する。","必要な物は保管し、不要な物は捨てる。",2],
+["問8 ポケットのない作業服を着る理由は何ですか。","作業服を軽くするため。","作業場に必要のない物を持ち込まないようにするため。","作業場で使いやすくするため。",1],
+["問9 作業をする前に行うことで、間違っているものを一つ選びなさい。","作業内容の確認をする。","機械や器具の確認は作業後に行うべきなので、作業前には行わない。","機械や器具に汚れや不備がないか点検する。",1],
+["問10 大きな原材料を加熱するとき、何を確認する必要がありますか。","原材料の色を確認することが必要です。","外側が焦げていないか確認することが必要です。","中心温度を確認することが必要です。",2],
+["問11 魚介類を洗浄するとき、どのような方法が使われていますか。","適切な濃度の食塩水で洗います。","魚介類はそのまま洗いません。","洗剤を使って洗います。",0],
+["問12 袋や容器を切って使うとき、切った数と残りの数を確認するのは、なぜですか。","製造コストを下げるため。","作業時間を短くするため。","異物混入を防ぐため。",2],
+["問13 食品の安全は、なぜ大切ですか。正しいものを一つ選びなさい。","お金儲けのため。","消費者が安全で安心して食べられる食品を求めるため。","生産効率を上げるため。",1],
+["問14 カビについて、正しいものを一つ選びなさい。","カビには毒がないので、放っておく。","豆・穀類・野菜・果物などはカビに汚染されやすいので、保存には気をつける。","カビの増殖を防ぐために、食品はできるだけ高温で保管する。",1],
+["問15 各食品の容器や袋に表示されている消費期限・賞味期限は、誰が決めますか。","消費者が決める。","食品製造工場が決める。","原材料の供給業者が決める。",1],
+["問16 作業をするときに、マフラーを巻いてもよいでしょうか。正しいものを一つ選びなさい。","個人の自由なので、かまわない。","気をつければ、巻いてもよい。","巻き込まれる恐れのある物は、着用しない。",2],
+["問17 作業前に、ネックレスやイヤリングはどうしますか。間違っているものを一つ選びなさい。","そのまま身につけて作業してもかまわない。","すべて外して、ロッカーなどに保管する。","出勤時には、すべて身につけてこないようにする。",0],
+["問18 作業中の注意について、正しいものを一つ選びなさい。","危険な箇所を見つけたら、すぐに自分で直す。","よそ見や、むだ話はしない。","作業場はいつでも離れてもよい。",1],
+["問19 微生物を増殖させないための食品の取扱いで、間違っているものを一つ選びなさい。","加熱した食品は、できるだけゆっくり冷却する。","食品は、適切な温度で保管する。","冷蔵庫・冷凍庫は、適切な温度で管理する。",0],
+["問20 作業靴の取扱いで、間違っているものを一つ選びなさい。","作業靴は、常に清潔にしておく。","作業靴は、通勤靴のままで入ってもよい。","汚染区域から非汚染区域に入るときは、必ず消毒液や洗浄装置で消毒する。",1],
+["問21 異物混入で特に多いものは何ですか。正しいものを一つ選びなさい。","雑草や殻","髪の毛・虫","プラスチック",1],
+["問22 5S活動について、正しいものを一つ選びなさい。","整理、整頓、安全、準備、清潔","安全、安心、清掃、清潔、躾","整理、整頓、清掃、清潔、躾",2],
+["問23 「整頓」の正しい意味は、どれですか。","必要な物がすぐに取り出せるように、置き場所を決めておく。","作業場とその周辺を、いつもきれいに掃除する。","必要な物を管理し、不要な物は捨てる。",0],
+["問24 金属が食品に混入するかもしれない場合は、何を使って検査しますか。","金属探知機を使って検査します。","光学式異物検出機を使って検査します。","色彩選別機を使って検査します。",0],
+["問25 異物混入を見つけたとき、どうしますか。正しいものを一つ選びなさい。","自分で取り除いて、作業を続ける。","直ちに作業を中止して、責任者に報告する。","他の作業に影響もないので、放っておく。",1],
+["問26 クレームがあったとき、何を調べる必要がありますか。","同じ時期に製造した製品に、同じ問題がないかを調べる必要があります。","製品の計画が正しいかを調べる必要があります。","製品の方法が適切かを調べる必要があります。",0],
+["問27 HACCP（ハサップ）で管理する三つの危害要因は、どれですか。正しいものを一つ選びなさい。","心理的危害要因、経済的危害要因、戦略的危害要因","生物的危害要因、化学的危害要因、物理的危害要因","安全的危害要因、生物的危害要因、労働的危害要因",1],
+["問28 危害要因を食品に混入させないために、どのような仕組みが必要ですか。","特別な仕組みが必要です。","一般衛生管理だけで十分です。","食品の保存を工夫することが必要です。",0],
+["問29 労働災害が発生したら、どのような対応をとるでしょうか。間違っているものを一つ選びなさい。","自分の判断だけで、できる限りのことをやり始める。","非常停止ボタンで機械を止め、危険を知らせる。","責任者の指示に従い、同僚と協力して適切な処置をとる。",0],
+["問30 冷凍庫・冷蔵庫は、何度で管理すればよいでしょうか。次の中から正しいものを一つ選びなさい。","冷凍庫0℃以下、冷蔵庫15℃以下","冷凍庫−15℃以下、冷蔵庫10℃以下","特に温度管理はしなくてもよい。",1],
+["問31 ベルトコンベヤの清掃をするとき、間違っているものを一つ選びなさい。","必ず機械を止めてから行う。","機械を止めて作業するときは、不意の起動を防止する。","動かしたままでも、雑巾が挟まれないようにすればよい。",2],
+["問32 30％の次亜塩素酸ナトリウム溶液があります。100ppmの溶液を3リットル作るとき、原液と水は、それぞれ何mlですか。正しいものを一つ選びなさい。","原液1ml、水2999ml","原液3ml、水2997ml","原液10ml、水2990ml",0],
+["問33 【イラスト：クレーンで吊り上げた荷物のワイヤーが振れて、体に当たりそうになっている】\nクレーンで荷物を吊り上げたとき、振れたワイヤーが体に当たり、二階から落ちそうになりました。同じ事故を防ぐために、どうすればよいですか。最も正しいものを一つ選びなさい。","クレーンを使うとき、自分の立つ場所を自分で理解していなかった。","クレーンのワイヤーが切れていたこと。","クレーンが動くとき、振れ戻しの位置に気がつくこと。",2],
+["問34 【イラスト：図は省略】\n下の図のような事故（フォークリフトと歩行者）の原因として、正しいものを一つ選びなさい。","歩いている人が腰をかがめていたため、フォークリフトが見えなかったため。","フォークリフトの運転者が、入口で一時停止しなかったため。","入口が狭かったため。",1],
+["問35 問34の事故を防ぐために、どうすればよいですか。正しいものを一つ選びなさい。","フォークリフトの運転者は、入口で一時停止し、安全確認を必ず行うようにする。","フォークリフトの速度を上げて、すばやく通過する。","入口を狭くする。",0],
+["問36 【イラスト：図は省略】\n下の図は、作業中のホースの状態です。それについて、間違っているものを一つ選びなさい。","ホースの表面がボロボロになっているけど、仕事に影響がないため、そのまま使用する。","虫やカビが発生しやすい状態である。","この状態で使用すると、異物混入が発生しやすい。",0],
+["問37 【イラスト：図は省略】\n下の図のような事故を防ぐために、どうすればよいですか。間違っているものを一つ選びなさい。","通路に物を置きっぱなしにして、箱はいくつも持ってもよい。","作業の前に、通路の安全を確認する。","箱を重ねて持つときは、前が見えることを確認する。",0],
+["問38 蓋を開けるとき、手が挟まれそうになりました。対応として、正しいものを選びなさい。","停止ボタンを押し、安全を確認してから作業を行う。","蓋を手で支えたまま作業する。","一人で作業する。",0],
+["問39 大きな鍋のお湯を捨てようとして、転びそうになりました。それについて、間違っているものを一つ選びなさい。","熱い大きな鍋は、二人で運んだほうがよい。","運ぶときは、ゴム手袋・前掛け・メガネなどを着用する。","作業靴が滑りにくければ、一人でお湯を入れた鍋を運んでも問題ない。",2],
+["問40 450gのうどんを作るためには、小麦粉が300g必要です。小麦粉が6kgあるとき、うどんは何kgできますか。","9kg","4kg","12kg",0]
+];
+
+/* ===== Daftar set soal. Tambah set baru = tambah satu objek di sini ===== */
+const SETS=[
+  {title:"練習問題 パート1",sub:"40問 · 衛生管理・HACCP・労働安全",time:70,q:D},
+  {title:"練習問題 パート2",sub:"39問 · 衛生管理・HACCP・労働安全",time:70,q:D2},
+  {title:"練習問題 パート3",sub:"39問 · 衛生管理・HACCP・労働安全",time:70,q:D3},
+  {title:"練習問題 パート4",sub:"40問 · 衛生管理・HACCP・労働安全 (disusun dari transkrip video)",time:70,q:D4}
+];
+const FR=`安全[あんぜん]
+食品[しょくひん]
+作[つく]
+売[う]
+人[ひと]
+病気[びょうき]
+給料[きゅうりょう]
+下[さ]がる
+食[た]べ
+会社[かいしゃ]
+信用[しんよう]
+落[お]
+有名[ゆうめい]
+別[べつ]
+商品[しょうひん]
+食中毒[しょくちゅうどく]
+食肉[しょくにく]
+職場[しょくば]
+行[い]く
+行[い]か
+前[まえ]
+体[からだ]
+調子[ちょうし]
+悪[わる]
+連絡[れんらく]
+仕事[しごと]
+休[やす]
+責任者[せきにんしゃ]
+機械[きかい]
+器具[きぐ]
+洗浄[せんじょう]
+洗浄剤[せんじょうざい]
+濃度[のうど]
+確認[かくにん]
+部分[ぶぶん]
+毎日[まいにち]
+変[か]
+後[あと]
+洗[あら]
+流[なが]
+乾[かわ]
+作業中[さぎょうちゅう]
+態度[たいど]
+時間[じかん]
+気[き]
+何度[なんど]
+時計[とけい]
+見[み]
+隣[となり]
+話[はなし]
+作業[さぎょう]
+製品[せいひん]
+状態[じょうたい]
+異物[いぶつ]
+衛生的[えいせいてき]
+行動[こうどう]
+正[ただ]
+一[ひと]つ
+選[えら]
+髪[かみ]
+毛[け]
+鼻[はな]
+触[さわ]
+待[ま]
+石[せっ]けん
+洗剤[せんざい]
+手[て]
+消毒液[しょうどくえき]
+消毒[しょうどく]
+作業服[さぎょうふく]
+3秒[さんびょう]
+秒[びょう]
+活動[かつどう]
+一般衛生管理[いっぱんえいせいかんり]
+行[おこな]
+整理[せいり]
+整頓[せいとん]
+清潔[せいけつ]
+入[はい]
+清算[せいさん]
+清掃[せいそう]
+管理[かんり]
+衛生[えいせい]
+中[なか]
+場所[ばしょ]
+捨[す]
+方[かた]
+決[き]
+常[つね]
+守[まも]
+作業場[さぎょうば]
+保[たも]
+道具[どうぐ]
+材料[ざいりょう]
+置[お]
+出[だ]せ
+主[おも]
+原因[げんいん]
+何[なん]
+豚肉[ぶたにく]
+卵[たまご]
+二枚貝[にまいがい]
+鶏肉[とりにく]
+多[おお]
+付着[ふちゃく]
+症候群[しょうこうぐん]
+起[お]
+原因菌[げんいんきん]
+腸管出血性大腸菌[ちょうかんしゅっけつせいだいちょうきん]
+菌[きん]
+予防[よぼう]
+大切[たいせつ]
+生[なま]
+肉[にく]
+貝[かい]
+室温[しつおん]
+保管[ほかん]
+容器[ようき]
+設備[せつび]
+加熱[かねつ]
+冷[ひ]
+微生物[びせいぶつ]
+急[きゅう]
+増[ふ]
+殺[ころ]
+何分間[なんぷんかん]
+1分間以上[いっぷんかんいじょう]
+1分間[いっぷんかん]
+5分間[ごふんかん]
+以上[いじょう]
+表面[ひょうめん]
+中心[ちゅうしん]
+測[はか]
+温度[おんど]
+平均[へいきん]
+石[いし]
+機器[きき]
+名前[なまえ]
+金属検出機[きんぞくけんしゅつき]
+線[せん]検査機[けんさき]
+磁石[じしゃく]
+冷凍庫[れいとうこ]
+以下[いか]
+容器包装[ようきほうそう]
+加工食品[かこうしょくひん]
+表示[ひょうじ]
+特定原材料[とくていげんざいりょう]
+大豆[だいず]
+完成[かんせい]
+検査[けんさ]
+原材料[げんざいりょう]
+受[う]け入[い]れ
+危害要因[きがいよういん]
+分析[ぶんせき]
+重要管理点[じゅうようかんりてん]
+働[はたら]
+経験[けいけん]
+短[みじか]
+長[なが]
+労働災害[ろうどうさいがい]
+危険[きけん]
+担当[たんとう]
+若[わか]
+慣[な]
+間違[まちが]
+注意[ちゅうい]
+必要[ひつよう]
+着[き]
+袖口[そでぐち]
+使[つか]
+汚[よご]
+混[ま]
+汚染区[おせんく]
+非汚染区[ひおせんく]
+作業靴[さぎょうくつ]
+手洗[てあら]
+報告[ほうこく]
+離[はな]
+黙[だま]
+微生物検査[びせいぶつけんさ]
+法律[ほうりつ]
+検査項目[けんさこうもく]
+従[したが]
+日本[にほん]
+結果[けっか]
+記録[きろく]
+危害要因分析[きがいよういんぶんせき]
+工程[こうてい]
+製造工程[せいぞうこうてい]
+製造[せいぞう]
+残[のこ]
+交差汚染[こうさおせん]
+防[ふせ]
+含[ふく]
+1日[いちにち]
+最初[さいしょ]
+同[おな]
+場合[ばあい]
+定期的[ていきてき]
+7原則[ななげんそく]
+原則[げんそく]
+施設基準[しせつきじゅん]
+設定[せってい]
+方法[ほうほう]
+危険異物[きけんいぶつ]
+保護具[ほごぐ]
+保護帽[ほごぼう]
+傷[きず]
+割[わ]
+化学薬品[かがくやくひん]
+手袋[てぶくろ]
+安全靴[あんぜんぐつ]
+空気[くうき]
+小[ちい]
+穴[あな]
+開[あ]
+熱中症[ねっちゅうしょう]
+休憩[きゅうけい]
+水分[すいぶん]
+補給[ほきゅう]
+予防体操[よぼうたいそう]
+汗[あせ]
+吸[す]
+衣服[いふく]
+水[みず]
+掃除[そうじ]
+仕方[しかた]
+取[と]り外[はず]
+外[はず]
+止[と]
+異常[いじょう]
+非常停止[ひじょうていし]
+周[まわ]
+同僚[どうりょう]
+大[おお]
+声[こえ]
+知[し]
+相談[そうだん]
+避難[ひなん]
+粘着[ねんちゃく]
+手順[てじゅん]
+一度[いちど]
+手洗い剤[てあらいざい]
+拭[ふ]
+脚立[きゃたつ]
+事故[じこ]
+締[し]
+不安定[ふあんてい]
+姿勢[しせい]
+始[はじ]
+天板[てんばん]
+立[た]
+荷物[にもつ]
+吊[つ]り上[あ]
+当[あ]
+倒[たお]
+位置[いち]
+運転者[うんてんしゃ]
+切[き]
+近[ちか]
+自分[じぶん]
+次亜塩素酸[じあえんそさん]
+溶液[ようえき]
+量[りょう]
+小麦粉[こむぎこ]
+稼働中[かどうちゅう]
+雑巾[ぞうきん]
+巻[ま]き込[こ]
+引[ひ]
+霜[しも]
+足[あし]
+床[ゆか]
+転[ころ]
+上[あ]
+大股[おおまた]
+歩[ある]
+靴[くつ]
+反対側[はんたいがわ]
+乗[の]
+脇[わき]
+柵[さく]
+設[もう]
+回[まわ]
+回転刃[かいてんば]
+右手[みぎて]
+他[ほか]
+二人[ふたり]
+持[も]
+問[もん]
+練習[れんしゅう]
+問題[もんだい]
+食品製造業[しょくひんせいぞうぎょう]
+特定技能評価試験[とくていぎのうひょうかしけん]
+労働安全[ろうどうあんぜん]
+70分[ななじゅっぷん] 原材料費[げんざいりょうひ] 最新[さいしん] 構造[こうぞう] 低[てい]コスト 自動[じどう] 倉庫[そうこ] 取扱[とりあつか]い 帽子[ぼうし] 内側[うちがわ] 取[と]り除[のぞ] 脱[ぬ]ぎ 膝[ひざ] 曲[ま]げ 下[お]ろ 抱[かか]え 伸[の]ばし 緩[ゆる]め 寝[ね]かせ 塩分[えんぶん] ぶどう糖[とう] 溶[と]かし 飲[の]み 与[あた]える 以下[いか] 挟[はさ] 周辺[しゅうへん] 不備[ふび] 焦[こ]げ 外側[そとがわ] 食塩水[しょくえんすい] 適切[てきせつ] 数[かず] 安心[あんしん] 求[もと]める 儲[もう]け 効率[こうりつ] 毒[どく] 放[ほう]っ 豆[まめ] 穀類[こくるい] 果物[くだもの] 保存[ほぞん] 高温[こうおん] 消費期限[しょうひきげん] 賞味期限[しょうみきげん] 誰[だれ] 供給業者[きょうきゅうぎょうしゃ] 個人[こじん] 自由[じゆう] 恐[おそ]れ 着用[ちゃくよう] 身[み] 出勤時[しゅっきんじ] 箇所[かしょ] 直[なお]す むだ話[ばなし] 通勤靴[つうきんぐつ] 汚染区域[おせんくいき] 非汚染区域[ひおせんくいき] 洗浄装置[せんじょうそうち] 雑草[ざっそう] 殻[から] 虫[むし] 準備[じゅんび] 安心 躾[しつけ] 意味[いみ] 金属探知機[きんぞくたんちき] 光学式[こうがくしき] 異物検出機[いぶつけんしゅつき] 色彩選別機[しきさいせんべつき] 直[ただ]ちに 中止[ちゅうし] 続[つづ] 時期[じき] 計画[けいかく] 心理的[しんりてき] 経済的[けいざいてき] 戦略的[せんりゃくてき] 生物的[せいぶつてき] 化学的[かがくてき] 物理的[ぶつりてき] 安全的[あんぜんてき] 労働的[ろうどうてき] 仕組[しく]み 特別[とくべつ] 工夫[くふう] 対応[たいおう] 限[かぎ]り 協力[きょうりょく] 処置[しょち] 不意[ふい] 起動[きどう] 動[うご] 原液[げんえき] 二階[にかい] 理解[りかい] 戻[もど]し 気[き]がつく 図[ず] 歩行者[ほこうしゃ] 入口[いりぐち] 一時停止[いちじていし] 狭[せま] 速度[そくど] 通過[つうか] 通路[つうろ] 箱[はこ] 置[お] 蓋[ふた] 支[ささ]え 一人[ひとり] 湯[ゆ] 捨[す] 前掛[まえか]け 滑[すべ] 動[うご]かし 振[ふ]れ 点[てん] 色[いろ] 各[かく] 省略[しょうりゃく] 停止[ていし] 消費者[しょうひしゃ] 三[みっ]つ 条件[じょうけん] 効果的[こうかてき] 削減[さくげん] 生産規模[せいさんきぼ] 生産設備[せいさんせつび] 生産量[せいさんりょう] 生産[せいさん] 面積[めんせき] 野菜[やさい] 牛[ぎゅう] 汚染[おせん] 増殖[ぞうしょく] 調理[ちょうり] 特徴[とくちょう] 完全[かんぜん] 生[は]え 低温[ていおん] 要素[ようそ] 栄養分[えいようぶん] 光[ひかり] 圧力[あつりょく] 芽胞[がほう] 細菌[さいきん] 育[そだ] 豊富[ほうふ] 急速[きゅうそく] 上着[うわぎ] 入[い]れ 作業場所[さぎょうばしょ] 作業内容[さぎょうないよう] 一緒[いっしょ] 空[あ] 片[かた] 洗濯[せんたく] 任[まか] 重要[じゅうよう] 設定値[せっていち] 監視[かんし] 食品衛生法[しょくひんえいせいほう] 規定[きてい] 庫内[こない] 温度計[おんどけい] 冷却方法[れいきゃくほうほう] 冷却[れいきゃく] 流水[りゅうすい] 風[かぜ] 製氷機[せいひょうき] 測定[そくてい] 早[はや] 義務[ぎむ] 品目[ひんもく] 薬剤[やくざい] 入出庫台帳[にゅうしゅっこだいちょう] 使用量[しようりょう] 残量[ざんりょう] 薬剤名[やくざいめい] 使用方法[しようほうほう] 防止[ぼうし] 区分[くぶん] 四[よっ]つ 広[ひろ] 出荷[しゅっか] 不十分[ふじゅうぶん] 企業[きぎょう] 影響[えいきょう] 信頼[しんらい] 失[うしな] 衛生上[えいせいじょう] 見[み]つけ出[だ] 確保[かくほ] 調[しら] 関係[かんけい] 効率[こうりつ] 転倒災害[てんとうさいがい] 転倒[てんとう] 減[へ] 品質向上[ひんしつこうじょう] 品質[ひんしつ] 異物混入防止[いぶつこんにゅうぼうし] 混入[こんにゅう] 効果[こうか] 向上[こうじょう] 食塩[しょくえん] 台車[だいしゃ] 一回[いっかい] 運[はこ] 腰痛災害[ようつうさいがい] 腰[こし] 持[も]ち上[あ] 呼吸[こきゅう] 整[ととの] 力[ちから] 重心[じゅうしん] 低[ひく] 少[すく] 坂道[さかみち] 重[かさ]ね 重[おも] 物[もの] 点検[てんけん] 靴底[くつぞこ] 交換[こうかん] 移動[いどう] 肩[かた] 載[の] 頭[あたま] 鍋[なべ] 元気[げんき] 安定[あんてい] 車[くるま] 熱[ねつ] 取[と]り扱[あつか]う 強[つよ]い 提供[ていきょう] 三条件[さんじょうけん] 安[やす] 原料[げんりょう] 製造環境[せいぞうかんきょう] 環境[かんきょう] 取[と]り扱[あつか]い 十分[じゅうぶん] 発生[はっせい] 存在[そんざい] 黄色[おうしょく] 球菌[きゅうきん] 大腸菌[だいちょうきん] 乾燥[かんそう] 今日[きょう] 出勤[しゅっきん] 予定[よてい] お腹[なか] 痛[いた] 吐[は] 我慢[がまん] 指示[しじ] 判断[はんだん] 作業着[さぎょうぎ] 入室[にゅうしつ] 取[と] 最[もっと] 作業後[さぎょうご] 片[かた] 終[お] 実践[じっせん] 不要[ふよう] 習慣[しゅうかん] 重量[じゅうりょう] 検出機[けんしゅつき] 金属以外[きんぞくいがい] 金属[きんぞく] 一般的[いっぱんてき] 冷蔵庫[れいぞうこ] 適当[てきとう] 取[と]り出[だ] 工場[こうじょう] 組[く]み合[あ] 乳[にゅう] 落花生[らっかせい] 小麦[こむぎ] 玉[たま] 牛肉[ぎゅうにく] 年[ねん] 月[がつ] 健康危害[けんこうきがい] 対処[たいしょ] 故障[こしょう] 食中毒菌[しょくちゅうどくきん] 抜[ぬ]き取[と] 信[しん] 管理基準[かんりきじゅん] 上[うえ]で 繰[く]り返[かえ] 軽[かる] 動作[どうさ] 強引[ごういん] 首[くび] 巻[ま] 考[かんが] 意識[いしき] 危[あぶ]ない 腸炎[ちょうえん] 分類[ぶんるい] 毒素型[どくそがた] 感染型[かんせんがた] 下[さ]げ 何を[なに]を 何に[なに]に 口[くち] 顔[かお] 冷[つめ]たく お金[かね] 薬[くすり] 鍵[かぎ] 殺菌剤[さっきんざい] 殺菌[さっきん] 調理器具[ちょうりきぐ] 扱[あつか]い方[かた] 受[う]け取[と] 冷凍品[れいとうひん] 砂糖[さとう] 塩[しお] 湿度[しつど] 高[たか] 天[てん]ぷら粉[こな] 油[あぶら] 底[そこ] 階段[かいだん] 外[そと]に 外[そと]の 持[も]ち込[こ] 持[も]ち出[だ] 移[うつ] 必[かなら] 書[か] 用[よう] 保管用[ほかんよう] 目[め] 爪[つめ] 指[ゆび] 間[あいだ] 手首[てくび] 米[こめ] 缶詰[かんづめ] 魚介類[ぎょかいるい] 症状[しょうじょう] 手足[てあし] 気分[きぶん] 発熱[はつねつ] 激[はげ] 腹痛[ふくつう] 下痢[げり] 返事[へんじ] 熱[あつ]い 全部[ぜんぶ] 張[は]り紙[がみ] 雨[あめ] 読[よ] 透明[とうめい] 袋[ふくろ] 貼[は] 壁[かべ] 窓[まど] 直接[ちょくせつ] 積[つ]み込[こ] 崩[くず] 段[だん] 積[つ]み上[あ] 押[お] 対策[たいさく] 荷台[にだい] 開[ひら]き止[ど]め 使用[しよう] 降[お]りる 両手[りょうて] 投[な]げる 押[お]し板[いた] 左手[ひだりて] 線[せん] 項目[こうもく] 出[で] 服[ふく] 理由[りゆう] 工場内[こうじょうない] 加工[かこう] 場面[ばめん] 39問[さんじゅうきゅうもん] パート 一覧[いちらん] 見直[みなお] 回答済[かいとうずみ] 試験[しけん] 受験者[じゅけんしゃ] 即時[そくじ] 最後[さいご] 戻[もど] 証明書[しょうめいしょ]
+40問[よんじゅうもん]
+新[あたら]
+準備中[じゅんびちゅう]
+正解[せいかい]
+不正解[ふせいかい]
+未回答[みかいとう]
+終了[しゅうりょう]
+次[つぎ]
+結果[けっか]
+本当[ほんとう]
+少[すこ]
+答[こた]
+全問正解[ぜんもんせいかい]
+所要[しょよう]
+全[ぜん]
+特[とく]
+保護[ほご]
+下[した]
+拭[ふ]き取[と]
+減[へ]
+作業者[さぎょうしゃ]
+行[い]こ
+行[い]って`.split(/\s+/);
+const MAP={};FR.forEach(e=>{MAP[e.replace(/\[[^\]]*\]/g,"")]=e.replace(/([0-9\u4e00-\u9fff々]+)\[([^\]]+)\]/g,"<ruby>$1<rt>$2</rt></ruby>")});
+const MAXL=Math.max(...Object.keys(MAP).map(k=>k.length));
+function rb(t){let o="",i=0;while(i<t.length){let m=0;for(let l=Math.min(MAXL,t.length-i);l>0;l--){const k=t.substr(i,l);if(MAP[k]){o+=MAP[k];i+=l;m=1;break}}if(!m){const c=t[i++];o+=c==="<"?"&lt;":c===">"?"&gt;":c==="&"?"&amp;":c==="\n"?"<br>":c}}return o}
+function H(el,t){el.innerHTML=rb(t)}
+function rubyNodes(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),a=[];while(w.nextNode()){const n=w.currentNode;if(/[\u4e00-\u9fff]/.test(n.nodeValue)&&!/^(SCRIPT|STYLE|RT|RUBY)$/.test(n.parentNode.nodeName))a.push(n)}
+a.forEach(n=>{const s=document.createElement("span");s.innerHTML=rb(n.nodeValue.replace(/\n\s*/g,""));n.replaceWith(...s.childNodes)})}
+const PASS_RATE=0.65; /* lulus jika benar >= 65% soal */
+/* Akun login: tambah/ubah di sini. n = nama yang tampil di sertifikat */
+const ACCOUNTS=[{u:"peserta",p:"ssw2026",n:"NAMA PESERTA"}];
+let LR,USER;
+const L=["A","B","C"];
+const $=s=>document.querySelector(s);
+let sel=0,timed=true,S,cur,ans,t0,tEnd,tm,fcf;
+
+function show(v){["login","home","quiz","result","cert"].forEach(x=>$("#"+x).hidden=x!==v);$("#thm1").hidden=v==="quiz";scrollTo(0,0)}
+function drawSets(){
+  const g=$("#sets");g.innerHTML="";
+  SETS.forEach((s,i)=>{const b=document.createElement("button");b.className="card"+(i===sel?" on":"");
+    b.innerHTML="<b></b><span></span>";H(b.children[0],s.title);H(b.children[1],s.sub+" · "+s.time+"分");
+    b.onclick=()=>{sel=i;drawSets()};g.appendChild(b)});
+  const d=document.createElement("div");d.className="card soon";H(d,"＋ 新しい問題セット、準備中…");g.appendChild(d);
+}
+function setMode(t){timed=t;$("#m-timed").classList.toggle("on",t);$("#m-free").classList.toggle("on",!t)}
+$("#m-timed").onclick=()=>setMode(true);$("#m-free").onclick=()=>setMode(false);
+
+let fz=1,flags=[],instant=true;
+function setAns(v){instant=v;$("#a-now").classList.toggle("on",v);$("#a-end").classList.toggle("on",!v)}
+$("#a-now").onclick=()=>setAns(true);$("#a-end").onclick=()=>setAns(false);
+function start(){
+  S=SETS[sel];ans=Array(S.q.length).fill(-1);flags=Array(S.q.length).fill(false);cur=0;t0=Date.now();tEnd=t0+S.time*60000;
+  $("#tm").parentNode.hidden=!timed;$("#quiz").classList.toggle("ins",instant);
+  clearInterval(tm);tm=setInterval(tick,500);tick();
+  H($("#cb-title"),S.title);H($("#cb-user"),"受験者 / Peserta: "+(USER?USER.n:"-"));
+  $("#dlg").hidden=true;render();show("quiz");
+}
+const mmss=ms=>{const s=Math.max(0,Math.floor(ms/1000));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+function tick(){
+  if(!timed)return;
+  const r=tEnd-Date.now(),c=$("#tm");c.textContent=mmss(r);c.classList.toggle("warn",r<300000);if(r<=0)finish();
+}
+function go(i){cur=i;render();window.scrollTo({top:0,behavior:"smooth"})}
+function render(){
+  const d=S.q[cur],a=ans[cur],n=S.q.length,lock=instant&&a>=0;
+  H($("#no"),"問 "+(cur+1)+" / "+n);
+  H($("#qt"),d[0].replace(/^問\d+\s*/,""));
+  const o=$("#opts");o.innerHTML="";
+  for(let k=0;k<3;k++){
+    const b=document.createElement("button");b.className="o"+(a===k&&!lock?" sel":"");
+    b.innerHTML="<i>"+L[k]+"</i><span></span>";H(b.children[1],d[k+1]);b.disabled=lock;
+    if(lock){if(k===d[4])b.classList.add("ok");else if(k===a)b.classList.add("ng")}
+    b.onclick=()=>{ans[cur]=(!instant&&ans[cur]===k)?-1:k;render()};o.appendChild(b);
+  }
+  const f=$("#fb");
+  if(!lock){f.className="fb";f.textContent=""}
+  else if(a===d[4]){f.className="fb ok";H(f,"⭕ 正解です！")}
+  else{f.className="fb ng";H(f,"❌ 不正解　正解は "+L[d[4]]+" です。")}
+  $("#flg").checked=flags[cur];$("#prev").disabled=cur===0;$("#next").disabled=cur===n-1;
+  const m=$("#map");m.innerHTML="";
+  S.q.forEach((q,i)=>{const b=document.createElement("button");b.textContent=i+1;
+    if(ans[i]>=0)b.classList.add(instant?(ans[i]===q[4]?"ok":"ng"):"a");
+    if(flags[i])b.classList.add("f");if(i===cur)b.classList.add("cur");
+    b.onclick=()=>go(i);m.appendChild(b)});
+  const done=ans.filter(x=>x>=0).length,fl=flags.filter(Boolean).length,ok=ans.filter((x,i)=>x===S.q[i][4]).length;
+  H($("#sc"),"回答済 / Terjawab: "+done+" / "+n+"\nマーク / Ditandai: "+fl+(instant?"\n正解 / Benar: "+ok:""));
+}
+$("#prev").onclick=()=>go(cur-1);$("#next").onclick=()=>go(cur+1);
+$("#flg").onchange=e=>{flags[cur]=e.target.checked;render()};
+function sz(d){fz=Math.min(1.5,Math.max(.85,fz+d));$("#quiz").style.setProperty("--fz",fz)}
+$("#fsm").onclick=()=>sz(-.1);$("#fsp").onclick=()=>sz(.1);
+$("#fin").onclick=()=>{const un=ans.filter(x=>x<0).length,fl=flags.filter(Boolean).length;
+  H($("#dmsg"),"未回答 / Belum dijawab: "+un+"\nマーク / Ditandai: "+fl+"\n試験を終了しますか？\nAkhiri ujian?");$("#dlg").hidden=false};
+$("#d-no").onclick=()=>{$("#dlg").hidden=true};$("#d-ok").onclick=()=>{$("#dlg").hidden=true;finish()};
+function finish(){
+  clearInterval(tm);clearTimeout(fcf);fcf=0;$("#dlg").hidden=true;
+  const n=S.q.length,ok=ans.filter((x,i)=>x===S.q[i][4]).length,none=ans.filter(x=>x<0).length,ng=n-ok-none,raw=Math.round(ok/n*100),pct=Math.round(ok/n*150);LR={ok,n,pct,raw,pass:ok/n>=PASS_RATE,title:S.title};
+  H($("#rt"),S.title);$("#ring").style.setProperty("--p",raw);
+  $("#rs").innerHTML=pct+"%<small>"+ok+" / "+n+"</small>";
+  H($("#rm"),raw>=80?"すばらしい！ Sangat bagus 🎉":raw>=60?"もう少し！ Sedikit lagi 💪":"がんばろう！ Ayo belajar lagi 📚");
+  const el=Math.min(Date.now(),tEnd)-t0;
+  $("#stats").innerHTML="<div><b>"+ok+"</b>"+rb("正解")+"</div><div><b>"+ng+"</b>"+rb("不正解")+"</div><div><b>"+none+"</b>"+rb("未回答")+"</div><div><b>"+mmss(el)+"</b>"+rb("時間")+"</div>";
+  const r=$("#rev");r.innerHTML="";
+  S.q.forEach((q,i)=>{if(ans[i]===q[4])return;
+    const d=document.createElement("div");d.className="rv";H(d,q[0]);
+    const e=document.createElement("em");H(e,"✔ "+L[q[4]]+"　"+q[q[4]+1]);d.appendChild(e);
+    if(ans[i]>=0){const u=document.createElement("u");H(u,"✖ あなたの答え: "+L[ans[i]]+"　"+q[ans[i]+1]);d.appendChild(u)}
+    else{const u=document.createElement("u");H(u,"未回答");d.appendChild(u)}
+    r.appendChild(d)});
+  if(!r.children.length)r.innerHTML="<div class='rv' style='border-left-color:var(--ok)'>"+rb("全問正解！")+" Semua benar 🎉</div>";
+  show("result");
+}
+$("#go").onclick=start;$("#again").onclick=start;$("#back").onclick=()=>show("home");
+$("#tg").onclick=()=>{const o=document.body.classList.toggle("nofuri");$("#tg").textContent="ふりがな: "+(o?"OFF":"ON")};
+const $d=n=>String(n).padStart(2,"0");
+function login(){
+  const u=$("#lu").value.trim(),p=$("#lp").value,a=ACCOUNTS.find(x=>x.u===u&&x.p===p);
+  if(!a){$("#le").hidden=false;return}
+  USER=a;$("#le").hidden=true;$("#lp").value="";$("#hi").textContent="👤 "+a.n;show("home");
+}
+$("#lb").onclick=login;$("#lp").onkeydown=e=>{if(e.key==="Enter")login()};$("#lu").onkeydown=e=>{if(e.key==="Enter")$("#lp").focus()};
+$("#out").onclick=()=>{USER=null;$("#lu").value="";show("login")};
+function cert(){
+  if(!LR.no){
+    const d=new Date(),ymd=d.getFullYear()+"/"+$d(d.getMonth()+1)+"/"+$d(d.getDate());
+    LR.no="PR"+ymd.replace(/\//g,"")+Math.floor(1000+Math.random()*9000);
+    $("#c-no").textContent=LR.no;$("#c-date").textContent=ymd;
+    $("#c-name").textContent=USER?USER.n:"";$("#c-dob").textContent="";$("#c-sex").textContent="";
+  }
+  $("#c-exam").innerHTML="Manufacture of Food Test (Practice)<small>"+LR.title+"</small>";
+  const r=$("#c-res");r.className=LR.pass?"pass":"fail";
+  r.innerHTML=(LR.pass?"合格 PASS":"不合格 FAIL")+"<small>Score "+LR.pct+"% ("+LR.ok+" / "+LR.n+")</small>";
+  show("cert");
+}
+$("#tocert").onclick=cert;$("#cb").onclick=()=>show("result");$("#prt").onclick=()=>window.print();
+function curTheme(){return document.documentElement.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}
+function setTheme(m,save){document.documentElement.dataset.theme=m;document.querySelectorAll(".thm").forEach(b=>b.textContent=m==="dark"?"☀️":"🌙");if(save){try{localStorage.setItem("ssw-theme",m)}catch(e){}}}
+document.querySelectorAll(".thm").forEach(b=>b.onclick=()=>setTheme(curTheme()==="dark"?"light":"dark",true));
+(()=>{let s=null;try{s=localStorage.getItem("ssw-theme")}catch(e){}setTheme(s==="dark"||s==="light"?s:curTheme(),false)})();
+drawSets();["#login","#home","#quiz","#result"].forEach(s=>rubyNodes($(s)));
+</script>
+</body>
+</html>
